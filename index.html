@@ -501,6 +501,11 @@
 
 	/* print */
 	.hf-print{background:#fff}
+
+	/* antes e depois numa única imagem (lado a lado) — mostrada inteira, sem cortar */
+	.hf-unica{background:#140a1c}
+	.hf-unica .hf-fundo{filter:blur(16px) brightness(.5);transform:scale(1.2)}
+	.hf-unica .hf-img{object-fit:contain}
 	.hf-print img{object-fit:contain;padding:8px}
 
 	/* vídeo */
@@ -576,7 +581,6 @@
 		</div>
 		<div class="hf-info" aria-live="polite"><div class="hf-nome"></div><div class="hf-chips"></div></div>
 		<div class="hf-pontos" role="tablist" aria-label="Escolher foto"></div>
-		<div class="hf-contador"></div>
 		<p class="hf-nota">Partilhado por alunas, com autorização. Os resultados variam de pessoa para pessoa.</p>
 	</div>
 </div>
@@ -1233,6 +1237,7 @@
    CONFIGURAÇÃO — preencha a lista HF_ITENS (uma linha por foto/depoimento).
    A ordem da lista é a ordem do carrossel. Misture os tipos à vontade:
 
+   antes e depois NUMA SÓ IMAGEM (lado a lado) → { tipo:'resultado', imagem:'image/hero/resultado-1.webp' }
    antes/depois → { tipo:'antesdepois', nome:'Maria S.', idade:54, semanas:4,
                     antes:'image/hero/maria-antes.webp', depois:'image/hero/maria-depois.webp' }
                   (as duas fotos com o MESMO tamanho e enquadramento, vertical 4:5)
@@ -1244,13 +1249,25 @@
    ===================================================================== */
 var HF_ITENS = [
 	// JÁ PREENCHIDO. Para trocar uma foto, NÃO mexa aqui: substitua o ficheiro em image/hero/ por outro com o MESMO nome.
-	{ tipo:'antesdepois', antes:'image/hero/antes-1.webp', depois:'image/hero/depois-1.webp' },
-	{ tipo:'print',       imagem:'image/hero/print-1.webp' },
-	{ tipo:'antesdepois', antes:'image/hero/antes-2.webp', depois:'image/hero/depois-2.webp' },
-	{ tipo:'print',       imagem:'image/hero/print-2.webp' },
-	{ tipo:'antesdepois', antes:'image/hero/antes-3.webp', depois:'image/hero/depois-3.webp' },
-	{ tipo:'print',       imagem:'image/hero/print-3.webp' },
-	{ tipo:'antesdepois', antes:'image/hero/antes-4.webp', depois:'image/hero/depois-4.webp' },
+	// resultado-1 a resultado-15 = UMA imagem com o antes e o depois lado a lado.  print-1 a print-3 = prints de mensagens.
+	{ tipo:'resultado', imagem:'image/hero/resultado-1.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-2.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-3.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-4.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-5.webp' },
+	{ tipo:'print',     imagem:'image/hero/print-1.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-6.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-7.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-8.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-9.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-10.webp' },
+	{ tipo:'print',     imagem:'image/hero/print-2.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-11.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-12.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-13.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-14.webp' },
+	{ tipo:'resultado', imagem:'image/hero/resultado-15.webp' },
+	{ tipo:'print',     imagem:'image/hero/print-3.webp' },
 ];
 var HF_INTERVALO = 3800;   // milissegundos entre cada passagem automática (0 = não passa sozinho)
 var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lista)
@@ -1295,6 +1312,11 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 		if (x.slot) {
 			var m = {antesdepois:['🖼️','Antes/depois'], texto:['💬','Depoimento'], print:['📱','Print de mensagem'], video:['🎥','Vídeo'], foto:['📷','Foto']}[x.slot];
 			c.innerHTML = '<div class="hf-slot"><span>' + m[0] + '</span><b>' + m[1] + ' ' + x.n + '</b><small>' + (x.slot === 'antesdepois' ? 'Foto antes + depois, mesmo tamanho (4:5).' : x.slot === 'video' ? 'Vídeo vertical com capa.' : 'Imagem vertical 4:5.') + '</small><code>HF_ITENS</code></div>';
+		} else if (x.tipo === 'resultado') {
+			c.classList.add('hf-unica');
+			c.innerHTML = '<img class="hf-fundo" src="' + esc(x.imagem) + '" alt="" aria-hidden="true" loading="' + carga + '" decoding="async" draggable="false">' +
+				'<img class="hf-img" src="' + esc(x.imagem) + '" alt="Antes e depois' + (x.nome ? ' — ' + esc(x.nome) : '') + '" loading="' + carga + '" decoding="async" draggable="false">' +
+				'<span class="hf-tag a">Antes</span><span class="hf-tag d">Depois</span>';
 		} else if (x.tipo === 'antesdepois') {
 			c.classList.add('hf-ad', 'hf-respira');
 			c.innerHTML = '<img src="' + esc(x.antes) + '" alt="Antes — ' + esc(x.nome || '') + '" loading="' + carga + '" decoding="async" draggable="false">' +
@@ -1320,7 +1342,7 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	});
 
 	/* ---------- pontos ---------- */
-	var mostrarPontos = n <= 14;
+	var mostrarPontos = n <= 30;
 	if (mostrarPontos) itens.forEach(function(x, i){
 		var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', 'Ir para ' + (i+1));
 		b.addEventListener('click', function(){ irPara(i); pausar(8000); });
@@ -1376,7 +1398,7 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 			chipsEl.innerHTML = ch.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
 		}
 		if (mostrarPontos) pontos.querySelectorAll('button').forEach(function(b, k){ b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
-		contador.textContent = (i + 1) + ' / ' + n;
+		if (contador) contador.textContent = (i + 1) + ' / ' + n;
 	}
 
 	/* ---------- animação até um índice ---------- */
