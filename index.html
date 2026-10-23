@@ -7,6 +7,9 @@
 	<meta name="description" content="Ativação Neuromuscular Seletiva: rotina guiada de 10 minutos por dia para devolver sustentação à bochecha e suavizar o bigode chinês, sem agulhas e sem efeito balão.">
 	<meta name="facebook-domain-verification" content="lo0wyl0v58fdm4f2l9qsflswitrl27"/>
 
+	<!-- Teste A/B: identifica esta página como variante A (antes do GTM, para todas as tags verem) -->
+	<script>window.PAGINA_VARIANTE='A';window.dataLayer=window.dataLayer||[];window.dataLayer.push({pagina_variante:'A'});</script>
+
 	<!-- 1. Google Tag Manager (GTM) -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -49,6 +52,7 @@
 	        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
 	        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
 	    })(window, document, "clarity", "script", "yf3fitrw5z");
+	    clarity("set", "variante", "A");
 	</script>
 
 	<!-- Favicon próprio (letras XB em SVG; substituir por ficheiro da marca quando existir) -->
@@ -939,7 +943,9 @@
 				params.forEach(function(v,k){
 					if(reservados.indexOf(k) === -1 && !url.searchParams.has(k)){ url.searchParams.set(k,v); }
 				});
-				if(params.get('utm_source') && !url.searchParams.has('src')){ url.searchParams.set('src', params.get('utm_source')); }
+				// Teste A/B: o src começa sempre por "pagA" para cada venda na Hotmart mostrar de que página veio
+				var variante = 'pag' + (window.PAGINA_VARIANTE || 'A');
+				url.searchParams.set('src', params.get('utm_source') ? variante + '-' + params.get('utm_source') : variante);
 				a.href = url.toString();
 			}catch(e){}
 		});
