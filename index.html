@@ -540,9 +540,27 @@
 		.hf{border-radius:20px;padding-top:14px}
 		.hf-seta{width:34px;height:34px;margin-top:-17px;font-size:15px}
 		.hf-seta.esq{left:6px}.hf-seta.dir{right:6px}
-		.hero-midia.hf-coluna{max-width:none}
+		.hero-midia.hf-coluna{max-width:none;width:auto;margin-left:-20px;margin-right:-20px}
+		.hf{border-radius:0;padding-left:0;padding-right:0}
 	}
 	@media (prefers-reduced-motion:reduce){.hf-ad.hf-ativo.hf-respira,.hf-ponto{animation:none}}
+
+	/* ===== SEM QUADRO ROXO: carrossel direto sobre o fundo claro da hero ===== */
+	.hf{background:none;box-shadow:none;border-radius:0;padding:0;color:var(--texto,#2B2B2B)}
+	.hf-selo{color:#69338a;background:#fff;border:1px solid #ead9f2;box-shadow:0 6px 18px rgba(105,51,138,.10)}
+	.hf-card{box-shadow:0 14px 34px rgba(42,19,56,.22);border:0}
+	.hf-card.hf-ativo{border:0;box-shadow:0 22px 50px rgba(42,19,56,.30)}
+	.hf-veu{background:#fbf5fd}
+	.hf-seta{background:#fff;color:#69338a;border:1px solid #ead9f2;box-shadow:0 6px 16px rgba(105,51,138,.18)}
+	.hf-seta:hover{background:#69338a;color:#fff}
+	.hf-nome{color:#2B2B2B}
+	.hf-chips span{color:#69338a;background:#f9f0ff;border:1px solid #ead9f2}
+	.hf-pontos button{background:#e2cdee}
+	.hf-pontos button[aria-current="true"]{background:linear-gradient(90deg,#69338a,#c58cff)}
+	.hf-nota{color:#8a7a96}
+	.hf-unica,.hf-card{background:#fff}
+	.hf-unica .hf-tag{background:rgba(42,19,56,.78)}
+	@media (max-width:767px){.hf{border-radius:0}}
 </style>
 
 	<style>
@@ -656,7 +674,6 @@
 					<div class="fase-corpo">
 						<span class="fase-num">⚡ FASE 1</span>
 						<h3>Desativação dos Músculos Depressores</h3>
-						<p>Manobras específicas para “desligar” e relaxar a tensão dos músculos que puxam o canto da boca e as bochechas para baixo.</p>
 					</div>
 				</div>
 				<div class="fase-linha">
@@ -664,7 +681,6 @@
 					<div class="fase-corpo">
 						<span class="fase-num">⚡ FASE 2</span>
 						<h3>Ancoragem dos Músculos Elevadores</h3>
-						<p>Exercícios isométricos direcionados para tonificar e erguer a cadeia dos músculos zigomáticos, puxando as maçãs do rosto de volta para o lugar original sem dar volume.</p>
 					</div>
 				</div>
 				<div class="fase-linha">
@@ -672,7 +688,6 @@
 					<div class="fase-corpo">
 						<span class="fase-num">⚡ FASE 3</span>
 						<h3>Drenagem e Oxigenação Express</h3>
-						<p>Deslizamentos suaves para eliminar a retenção de líquidos matinal, restaurar o viço e garantir o efeito <i>freshness</i> radiante.</p>
 					</div>
 				</div>
 			</div>
@@ -681,7 +696,13 @@
 			</div>
 		</div>
 	</section>
-
+<style>
+	@media (max-width:767px){
+		.fase-linha{display:flex !important;flex-direction:column !important;align-items:stretch !important;gap:0 !important;height:auto !important}
+		.fase-linha img{position:static !important;display:block !important;width:100% !important;height:auto !important;max-height:none !important;aspect-ratio:4/3;object-fit:cover;margin:0 !important;transform:none !important}
+		.fase-linha .fase-corpo{position:relative !important;z-index:1;padding:16px 18px 20px !important;margin:0 !important;background:#fff;text-align:left}
+	}
+</style>
 	<!-- 6. TRANSFORMAÇÃO -->
 	<section class="sec sec-lilas">
 		<div class="wrap">
@@ -1231,7 +1252,7 @@
 	</script>
 
 	<!-- CARROSSEL 3D DA HERO — configuração e script. PROCURE "HF_ITENS" PARA PÔR AS FOTOS -->
-	<script>
+<script>
 /* =====================================================================
    CONFIGURAÇÃO — preencha a lista HF_ITENS (uma linha por foto/depoimento).
    A ordem da lista é a ordem do carrossel. Misture os tipos à vontade:
@@ -1349,7 +1370,8 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	var W = 260, H = 325;
 	function medir(){
 		var largura = palco.parentNode.clientWidth || 360;
-		W = Math.round(Math.max(200, Math.min(340, largura * (largura < 480 ? 0.7 : 0.6))));
+		var movel = window.innerWidth < 768;
+		W = Math.round(Math.max(220, Math.min(movel ? 420 : 440, largura * (movel ? 0.9 : 0.86))));
 		H = W;
 		palco.style.height = (H + 22) + 'px';
 		cards.forEach(function(c){ c.style.width = W + 'px'; c.style.height = H + 'px'; });
