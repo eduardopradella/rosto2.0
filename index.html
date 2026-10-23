@@ -469,11 +469,11 @@
 	.hf[hidden]{display:none}
 	.hf-selo{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.3px;color:#f6e9ff;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:30px;margin-bottom:6px}
 	.hf-ponto{width:8px;height:8px;border-radius:50%;background:var(--hf-verde);animation:hfPing 1.8s ease-out infinite}
-	@keyframes hfPing{0%{box-shadow:0 0 0 0 rgba(0,164,40,.6)}80%,100%{box-shadow:0 0 0 8px rgba(0,164,40,0)}}
+	@keyframes hfPing{0%,100%{opacity:1}50%{opacity:.35}}
 
 	.hf-palco{position:relative;perspective:1100px;perspective-origin:50% 45%;touch-action:pan-y;cursor:grab;margin:0 auto}
 	.hf-palco.hf-arrasta{cursor:grabbing}
-	.hf-card{position:absolute;left:50%;top:50%;border-radius:18px;overflow:hidden;background:#1c0f27;will-change:transform,opacity,filter;transform-style:preserve-3d;box-shadow:0 18px 40px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
+	.hf-card{position:absolute;left:50%;top:50%;border-radius:18px;overflow:hidden;background:#1c0f27;box-shadow:0 10px 24px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 	.hf-card.hf-ativo{border:1px solid rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 24px 60px rgba(0,0,0,.55),0 0 50px rgba(197,140,255,.35)}
 	.hf-card img,.hf-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
 
@@ -503,9 +503,10 @@
 	.hf-print{background:#fff}
 
 	/* antes e depois numa única imagem (lado a lado) — mostrada inteira, sem cortar */
-	.hf-unica{background:#140a1c}
-	.hf-unica .hf-fundo{filter:blur(16px) brightness(.5);transform:scale(1.2)}
+	.hf-unica{background:radial-gradient(circle at 50% 40%,#2a1638 0%,#120a18 100%)}
 	.hf-unica .hf-img{object-fit:contain}
+	.hf-coluna{min-width:0}
+	.hf,.hf-palco{overflow:hidden;overflow:clip}
 	.hf-print img{object-fit:contain;padding:8px}
 
 	/* vídeo */
@@ -521,10 +522,11 @@
 	.hf-slot code{font-size:10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:2px 6px}
 
 	/* setas, legenda e pontos */
-	.hf-seta{position:absolute;top:50%;z-index:2000;width:40px;height:40px;margin-top:-20px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:18px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .2s,transform .2s}
+	.hf-seta{position:absolute;top:50%;z-index:2000;width:40px;height:40px;margin-top:-20px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:18px;cursor:pointer;transition:background .2s,transform .2s}
 	.hf-seta:hover{background:rgba(255,255,255,.2);transform:scale(1.06)}
 	.hf-seta.esq{left:10px}.hf-seta.dir{right:10px}
-	.hf-info{min-height:44px;padding:4px 16px 0}
+	.hf-info{padding:2px 16px 0}
+	.hf-info.vazio{display:none}
 	.hf-nome{font-weight:700;font-size:15px}
 	.hf-chips{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:4px}
 	.hf-chips span{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#eadcf4}
@@ -538,6 +540,7 @@
 		.hf{border-radius:20px;padding-top:14px}
 		.hf-seta{width:34px;height:34px;margin-top:-17px;font-size:15px}
 		.hf-seta.esq{left:6px}.hf-seta.dir{right:6px}
+		.hero-midia.hf-coluna{max-width:none}
 	}
 	@media (prefers-reduced-motion:reduce){.hf-ad.hf-ativo.hf-respira,.hf-ponto{animation:none}}
 </style>
@@ -1248,26 +1251,15 @@
    vídeo        → { tipo:'video', video:'videos/dep-1.mp4', poster:'image/hero/dep-1-capa.webp', nome:'Rosa M.', idade:63 }
    ===================================================================== */
 var HF_ITENS = [
-	// JÁ PREENCHIDO. Para trocar uma foto, NÃO mexa aqui: substitua o ficheiro em image/hero/ por outro com o MESMO nome.
-	// resultado-1 a resultado-15 = UMA imagem com o antes e o depois lado a lado.  print-1 a print-3 = prints de mensagens.
+	// 7 FOTOS. Para trocar uma foto, NÃO mexa aqui: substitua o ficheiro em image/hero/ por outro com o MESMO nome.
+	// resultado-1 a resultado-7 = UMA imagem com o antes e o depois lado a lado.
 	{ tipo:'resultado', imagem:'image/hero/resultado-1.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-2.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-3.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-4.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-5.webp' },
-	{ tipo:'print',     imagem:'image/hero/print-1.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-6.webp' },
 	{ tipo:'resultado', imagem:'image/hero/resultado-7.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-8.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-9.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-10.webp' },
-	{ tipo:'print',     imagem:'image/hero/print-2.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-11.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-12.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-13.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-14.webp' },
-	{ tipo:'resultado', imagem:'image/hero/resultado-15.webp' },
-	{ tipo:'print',     imagem:'image/hero/print-3.webp' },
 ];
 var HF_INTERVALO = 3800;   // milissegundos entre cada passagem automática (0 = não passa sozinho)
 var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lista)
@@ -1314,8 +1306,7 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 			c.innerHTML = '<div class="hf-slot"><span>' + m[0] + '</span><b>' + m[1] + ' ' + x.n + '</b><small>' + (x.slot === 'antesdepois' ? 'Foto antes + depois, mesmo tamanho (4:5).' : x.slot === 'video' ? 'Vídeo vertical com capa.' : 'Imagem vertical 4:5.') + '</small><code>HF_ITENS</code></div>';
 		} else if (x.tipo === 'resultado') {
 			c.classList.add('hf-unica');
-			c.innerHTML = '<img class="hf-fundo" src="' + esc(x.imagem) + '" alt="" aria-hidden="true" loading="' + carga + '" decoding="async" draggable="false">' +
-				'<img class="hf-img" src="' + esc(x.imagem) + '" alt="Antes e depois' + (x.nome ? ' — ' + esc(x.nome) : '') + '" loading="' + carga + '" decoding="async" draggable="false">' +
+			c.innerHTML = '<img class="hf-img" src="' + esc(x.imagem) + '" alt="Antes e depois' + (x.nome ? ' — ' + esc(x.nome) : '') + '" loading="' + carga + '" decoding="async" draggable="false">' +
 				'<span class="hf-tag a">Antes</span><span class="hf-tag d">Depois</span>';
 		} else if (x.tipo === 'antesdepois') {
 			c.classList.add('hf-ad', 'hf-respira');
@@ -1336,10 +1327,19 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 			if (x.tipo === 'print') c.classList.add('hf-print');
 			c.innerHTML = '<img src="' + esc(x.imagem) + '" alt="' + esc(x.nome || 'Aluna') + '" loading="' + carga + '" decoding="async" draggable="false">';
 		}
+		c.querySelectorAll('img').forEach(function(im){ var u = im.getAttribute('src'); if (u) { im.setAttribute('data-src', u); im.removeAttribute('src'); im.removeAttribute('loading'); } });
 		var veu = document.createElement('span'); veu.className = 'hf-veu'; c.appendChild(veu);
 		palco.appendChild(c);
 		return c;
 	});
+
+	var veus = cards.map(function(c){ return c.querySelector('.hf-veu'); });
+	// impede o navegador de "rolar" o painel por dentro (fotos que passam das bordas)
+	[raiz, palco].forEach(function(el){ el.addEventListener('scroll', function(){ if (el.scrollLeft || el.scrollTop) { el.scrollLeft = 0; el.scrollTop = 0; } }); });
+	function carregar(i){
+		var imgs = cards[i].querySelectorAll('img[data-src]');
+		for (var k = 0; k < imgs.length; k++) { imgs[k].src = imgs[k].getAttribute('data-src'); imgs[k].removeAttribute('data-src'); }
+	}
 
 	/* ---------- pontos ---------- */
 	var mostrarPontos = n <= 30;
@@ -1353,9 +1353,9 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	var W = 260, H = 325;
 	function medir(){
 		var largura = palco.parentNode.clientWidth || 360;
-		W = Math.round(Math.max(160, Math.min(290, largura * (largura < 480 ? 0.46 : 0.42))));
-		H = Math.round(W * 1.25);
-		palco.style.height = (H + 36) + 'px';
+		W = Math.round(Math.max(200, Math.min(340, largura * (largura < 480 ? 0.7 : 0.6))));
+		H = W;
+		palco.style.height = (H + 22) + 'px';
 		cards.forEach(function(c){ c.style.width = W + 'px'; c.style.height = H + 'px'; });
 		render();
 	}
@@ -1365,8 +1365,8 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	function render(){
 		for (var i = 0; i < n; i++) {
 			var c = cards[i], d = desvio(i, pos), a = Math.abs(d), s = d < 0 ? -1 : 1;
-			var x = s * (Math.min(a, 1) * W * 0.5 + Math.max(a - 1, 0) * W * 0.24);
-			var sc = 1 - Math.min(a, 3) * 0.14;
+			var x = s * (Math.min(a, 1) * W * 0.42 + Math.max(a - 1, 0) * W * 0.18);
+			var sc = 1 - Math.min(a, 3) * 0.15;
 			var rot = -s * Math.min(a, 1) * 16;
 			var z = -a * 90;
 			var opac = a > 3.4 ? 0 : 1 - Math.max(0, a - 2.2) * 0.8;
@@ -1374,7 +1374,9 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 			c.style.opacity = opac.toFixed(3);
 			c.style.zIndex = String(1000 - Math.round(a * 10));
 			c.style.pointerEvents = a > 3 ? 'none' : 'auto';
-			c.querySelector('.hf-veu').style.opacity = (Math.min(a, 1.6) * 0.38).toFixed(3);
+			c.style.visibility = a > 3.4 ? 'hidden' : 'visible';
+			veus[i].style.opacity = (Math.min(a, 1.6) * 0.38).toFixed(3);
+			if (a <= 2.6) carregar(i);
 		}
 		var novo = ((Math.round(pos) % n) + n) % n;
 		if (novo !== ativo) mudarAtivo(novo);
@@ -1397,6 +1399,7 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 			if (x.tipo === 'antesdepois') ch.push('arraste o círculo');
 			chipsEl.innerHTML = ch.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
 		}
+		info.classList.toggle('vazio', !nomeEl.textContent.trim() && !chipsEl.innerHTML.trim());
 		if (mostrarPontos) pontos.querySelectorAll('button').forEach(function(b, k){ b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
 		if (contador) contador.textContent = (i + 1) + ' / ' + n;
 	}
@@ -1421,13 +1424,14 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	function pausar(ms){ pausaAte = performance.now() + (ms || 6000); }
 	var intervalo = reduzir ? 0 : (typeof HF_INTERVALO === 'number' ? HF_INTERVALO : 3800), ultimoPasso = performance.now();
 	if ('IntersectionObserver' in window) new IntersectionObserver(function(en){ visivel = en[0].isIntersecting; }, {threshold:.35}).observe(raiz);
-	(function tick(t){
+	if (intervalo && n > 1) setInterval(function(){
+		if (document.hidden) return;
+		var t = performance.now();
 		var v = cards[ativo] && cards[ativo].querySelector('video');
 		var aOuvir = v && !v.muted && !v.paused;
-		if (intervalo && n > 1 && visivel && !emCima && !aOuvir && !arr && t > pausaAte && t - ultimoPasso > intervalo) { ultimoPasso = t; proximo(1); }
-		if (emCima || arr || t <= pausaAte || aOuvir) ultimoPasso = t;
-		requestAnimationFrame(tick);
-	})(performance.now());
+		if (emCima || arr || t <= pausaAte || aOuvir || !visivel) { ultimoPasso = t; return; }
+		if (t - ultimoPasso > intervalo) { ultimoPasso = t; proximo(1); }
+	}, 250);
 	palco.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') emCima = true; });
 	palco.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') emCima = false; });
 
@@ -1443,7 +1447,7 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 		if (!arr || e.pointerId !== arr.id) return;
 		var dx = e.clientX - arr.x;
 		if (!arr.mov && Math.abs(dx) > 6) { arr.mov = true; palco.classList.add('hf-arrasta'); try { palco.setPointerCapture(e.pointerId); } catch(_){} }
-		if (arr.mov) { pos = arr.p - dx / (W * 0.5); render(); }
+		if (arr.mov) { pos = arr.p - dx / (W * 0.42); render(); }
 	});
 	function fim(e){
 		if (!arr || (e && e.pointerId !== arr.id)) return;
