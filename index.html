@@ -1576,20 +1576,20 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 		<div class="lp-passo-form">
 			<span class="lp-selo">Conteúdo gratuito</span>
 			<h3 id="lpTitulo">Receba dicas para suavizar o bigode chinês</h3>
-			<p>Deixe seu e-mail e receba conteúdos exclusivos do Protocolo Xô Bigode Chinês e avisos de condições especiais.</p>
+			<p>Deixe o seu e-mail e receba conteúdos exclusivos do Protocolo Xô Bigode Chinês e avisos de condições especiais.</p>
 			<form class="lp-form" novalidate>
-				<input type="text" name="nome" placeholder="Seu primeiro nome" autocomplete="given-name" maxlength="100">
-				<input type="email" name="email" placeholder="Seu melhor e-mail" autocomplete="email" required maxlength="200">
+				<input type="text" name="nome" placeholder="O seu primeiro nome" autocomplete="given-name" maxlength="100">
+				<input type="email" name="email" placeholder="O seu melhor e-mail" autocomplete="email" required maxlength="200">
 				<input type="text" name="site" class="lp-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 				<button type="submit" class="btn">Quero receber</button>
 				<div class="lp-erro" aria-live="polite"></div>
 			</form>
-			<p class="lp-aviso">Sem spam. Você pode cancelar quando quiser.</p>
+			<p class="lp-aviso">Sem spam. Pode cancelar quando quiser.</p>
 		</div>
 		<div class="lp-passo-ok lp-ok" hidden>
 			<span class="lp-selo">Tudo certo! 💜</span>
-			<h3>E-mail cadastrado com sucesso</h3>
-			<p>Fique de olho na sua caixa de entrada (e no spam/promoções).</p>
+			<h3>E-mail registado com sucesso</h3>
+			<p>A primeira dica chega nos próximos minutos. Verifique a caixa de entrada (e as pastas Spam/Promoções).</p>
 			<button type="button" class="btn lp-continuar">Continuar lendo</button>
 		</div>
 	</div>
@@ -1645,9 +1645,9 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	form.addEventListener('submit', function(e){
 		e.preventDefault();
 		var email = form.email.value.trim();
-		if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { erro.textContent = 'Digite um e-mail válido.'; form.email.focus(); return; }
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { erro.textContent = 'Introduza um e-mail válido.'; form.email.focus(); return; }
 		erro.textContent = '';
-		botao.disabled = true; botao.textContent = 'Enviando...';
+		botao.disabled = true; botao.textContent = 'A enviar...';
 		fetch('/api/lead', {
 			method:'POST',
 			headers:{'Content-Type':'application/json'},
