@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espera! Oferta única — Protocolo Xô Bigode Chinês</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="facebook-domain-verification" content="lo0wyl0v58fdm4f2l9qsflswitrl27">
+<link rel="icon" href="https://protocoloxo.vercel.app/image/Logotipo.webp">
+
+<!-- =========================================================
+     CONFIGURAÇÃO — edita só este bloco
+     ========================================================= -->
+<script>
+window.CONFIG = {
+  // Rastreio
+  PIXEL_ID: '985013594550295',
+  GTM_ID:   'GTM-PQMCKKQG',
+  GA4_ID:   'G-YE45BSL91J',
+
+  // Tempo da oferta (minutos). Conta a partir da 1.ª visita e NÃO reinicia ao recarregar.
+  MINUTOS: 10,
+
+  // Ofertas desta página (back redirect)
+  premium: {
+    link: 'https://pay.hotmart.com/U107766375N?off=lmr0xvsg&checkoutMode=10',
+    precoAntigo: '€18,33',
+    precoNovo:   '€14,90',   // ⚠️ CONFIRMAR o valor em euros que a Hotmart mostra em Portugal (oferta = US$17)
+    valor: 14.90
+  },
+  essencial: {
+    link: 'https://pay.hotmart.com/U107766375N?off=upt907tf&checkoutMode=10',
+    precoAntigo: '€9,72',
+    precoNovo:   '€6,10',    // ⚠️ CONFIRMAR o valor em euros que a Hotmart mostra em Portugal (oferta = US$7)
+    valor: 6.10
+  },
+
+  // Para onde vão os botões quando o tempo acaba (preço normal da página principal)
+  expirado: {
+    premium:   'https://pay.hotmart.com/U107766375N?off=s8ovmae1&checkoutMode=10',
+    essencial: 'https://pay.hotmart.com/U107766375N?off=xuoe7z4g&checkoutMode=10'
+  },
+
+  // Link "não, obrigada"
+  paginaPrincipal: 'https://protocoloxo.vercel.app/',
+
+  // Identificador desta página no campo src da Hotmart (aparece nos relatórios)
+  SRC_TAG: 'backredirect'
+};
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer',window.CONFIG.GTM_ID);</script>
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YE45BSL91J"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', window.CONFIG.GA4_ID, { page_title: 'Back Redirect - Oferta Final' });
+  dataLayer.push({ pagina_tipo: 'back_redirect' });
+</script>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', window.CONFIG.PIXEL_ID);
+fbq('track', 'PageView');
+fbq('track', 'ViewContent', { content_name: 'Back Redirect - Oferta Final', content_category: 'back_redirect' });
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=985013594550295&ev=PageView&noscript=1"/></noscript>
+
+<!-- Utmify — UTMs -->
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --ink:#2B2B2B;
+    --ink-soft:#555;
+    --paper:#ffffff;
+    --cream:#FBF6F1;
+    --line:#ECE4DC;
+    --red:#D7263D;
+    --red-dark:#A9172B;
+    --green:#00BB2D;
+    --green-dark:#009624;
+    --gold:#F4B400;
+    --rose:#F7E3E0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',system-ui,-apple-system,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  .wrap{max-width:680px;margin:0 auto;padding:0 18px}
+
+  /* Barra de urgência fixa */
+  .urgency{position:sticky;top:0;z-index:50;background:var(--red);color:#fff;text-align:center;padding:10px 12px;font-weight:600;font-size:14px;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+  .urgency .timer{display:inline-block;background:#fff;color:var(--red);border-radius:6px;padding:2px 10px;margin-left:6px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+  .urgency.expired{background:var(--ink)}
+  .urgency.expired .timer{color:var(--ink)}
+
+  /* Hero */
+  .hero{background:var(--ink);color:#fff;padding:34px 0 40px;text-align:center}
+  .stop{display:inline-flex;align-items:center;gap:8px;background:rgba(215,38,61,.18);border:1px solid rgba(255,255,255,.18);color:#FFD5DA;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:30px;line-height:1.2;font-weight:800;margin-bottom:14px}
+  .hero h1 mark{background:none;color:var(--gold)}
+  .hero p.lead{font-size:17px;color:#E7E7E7;max-width:560px;margin:0 auto}
+  .hero .mock{margin:26px auto 0;max-width:360px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+
+  /* Secções */
+  section{padding:36px 0}
+  h2{font-size:24px;line-height:1.25;font-weight:800;margin-bottom:14px;text-align:center}
+  p{margin-bottom:12px}
+  .center{text-align:center}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px}
+
+  .truth p{font-size:16px}
+  .truth strong{color:var(--red-dark)}
+
+  /* Comparação de custo */
+  .cost{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+  .cost div{border-radius:14px;padding:16px;text-align:center}
+  .cost .bad{background:#fff;border:1px solid var(--line)}
+  .cost .good{background:#E9F9EE;border:2px solid var(--green)}
+  .cost small{display:block;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--ink-soft);margin-bottom:6px;font-weight:600}
+  .cost b{display:block;font-size:20px;line-height:1.2}
+  .cost .bad b{color:var(--red-dark)}
+  .cost .good b{color:var(--green-dark)}
+  .cost span{font-size:13px;color:var(--ink-soft)}
+
+  /* Lista */
+  .list{list-style:none;margin-top:6px}
+  .list li{position:relative;padding:10px 0 10px 34px;border-bottom:1px dashed var(--line);font-size:15px}
+  .list li:last-child{border-bottom:0}
+  .list li::before{content:'✓';position:absolute;left:0;top:10px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .list li.x::before{content:'✕';background:var(--red)}
+
+  /* Planos */
+  .plans{display:grid;gap:18px;margin-top:8px}
+  .plan{position:relative;background:#fff;border-radius:18px;border:1px solid var(--line);padding:26px 20px 22px;text-align:center;box-shadow:0 6px 20px rgba(43,43,43,.06)}
+  .plan.top{border:3px solid var(--green);box-shadow:0 14px 34px rgba(0,187,45,.18)}
+  .ribbon{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 14px;border-radius:999px;white-space:nowrap}
+  .plan h3{font-size:20px;font-weight:800;margin-bottom:2px}
+  .plan .sub{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .plan .inc{list-style:none;text-align:left;margin:0 auto 16px;max-width:360px}
+  .plan .inc li{font-size:14px;padding:6px 0 6px 26px;position:relative}
+  .plan .inc li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:800}
+  .plan .inc li.no{color:#9a9a9a;text-decoration:line-through}
+  .plan .inc li.no::before{content:'✕';color:#c4c4c4}
+  .price-old{font-size:15px;color:#999;text-decoration:line-through}
+  .price-new{font-size:42px;font-weight:800;line-height:1.05;color:var(--ink);margin:2px 0}
+  .price-note{font-size:13px;color:var(--ink-soft);margin-bottom:6px}
+  .save{display:inline-block;background:var(--rose);color:var(--red-dark);font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;margin-bottom:16px}
+
+  .btn{display:block;width:100%;text-decoration:none;text-align:center;font-weight:800;font-size:18px;line-height:1.2;color:#fff;background:var(--green);border-radius:12px;padding:18px 14px;box-shadow:0 6px 0 var(--green-dark);transition:transform .08s ease, box-shadow .08s ease}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green-dark)}
+  .btn small{display:block;font-size:12px;font-weight:600;opacity:.92;margin-top:4px}
+  .btn.secondary{background:var(--ink);box-shadow:0 6px 0 #000}
+  .plan.top .btn{animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 6px 0 var(--green-dark),0 0 0 0 rgba(0,187,45,.45)}50%{box-shadow:0 6px 0 var(--green-dark),0 0 0 12px rgba(0,187,45,0)}}
+  .safe{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-soft);margin-top:12px}
+
+  /* Dois caminhos */
+  .paths{display:grid;gap:12px}
+  .path{border-radius:14px;padding:18px}
+  .path.a{background:#fff;border:1px solid var(--line)}
+  .path.b{background:#E9F9EE;border:2px solid var(--green)}
+  .path h4{font-size:16px;font-weight:800;margin-bottom:6px}
+  .path.a h4{color:var(--red-dark)}
+  .path.b h4{color:var(--green-dark)}
+  .path p{font-size:14px;margin:0}
+
+  /* Garantia */
+  .guarantee{display:flex;gap:18px;align-items:center}
+  .guarantee img{width:110px;flex-shrink:0}
+  .guarantee h3{font-size:18px;font-weight:800;margin-bottom:6px}
+  .guarantee p{font-size:14px;margin:0}
+
+  /* FAQ */
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+  summary{font-weight:700;cursor:pointer;list-style:none;font-size:15px;position:relative;padding-right:24px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:'+';position:absolute;right:0;top:-2px;font-size:20px;color:var(--ink-soft)}
+  details[open] summary::after{content:'–'}
+  details p{font-size:14px;margin:10px 0 0;color:var(--ink-soft)}
+
+  .final{background:var(--ink);color:#fff;text-align:center;padding:40px 0}
+  .final h2{color:#fff}
+  .final p{color:#E7E7E7}
+  .nothanks{display:block;margin-top:18px;color:#B9B9B9;font-size:13px;text-decoration:underline}
+
+  footer{text-align:center;font-size:12px;color:#8a8a8a;padding:22px 18px 90px}
+  footer a{color:#8a8a8a}
+
+  /* Botão fixo mobile */
+  .sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:10px 14px;transform:translateY(110%);transition:transform .25s ease}
+  .sticky-cta.show{transform:translateY(0)}
+  .sticky-cta .btn{font-size:16px;padding:14px}
+
+  /* Estado expirado */
+  .expired-box{display:none;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px;text-align:center;margin-bottom:18px}
+  body.is-expired .expired-box{display:block}
+  body.is-expired .save,
+  body.is-expired .price-old{display:none}
+
+  @media (min-width:720px){
+    .hero h1{font-size:38px}
+    .plans{grid-template-columns:1fr 1fr;align-items:start}
+    .paths{grid-template-columns:1fr 1fr}
+    h2{font-size:28px}
+  }
+  @media (max-width:380px){
+    .hero h1{font-size:26px}
+    .price-new{font-size:36px}
+    .guarantee{flex-direction:column;text-align:center}
+  }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQMCKKQG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- BARRA DE URGÊNCIA -->
+<div class="urgency" id="urgency">
+  <span id="urgencyText">⚠️ Este desconto desaparece em</span>
+  <span class="timer" id="timer">10:00</span>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="stop">✋ Espera — não feches esta página</div>
+    <h1>Antes de saíres, preparei uma condição que <mark>só vais ver uma vez</mark>.</h1>
+    <p class="lead">O Protocolo Xô Bigode Chinês completo, com <strong>desconto exclusivo desta página</strong>. Quando o tempo acabar ou fechares esta janela, este preço deixa de existir para ti.</p>
+    <img class="mock" src="https://protocoloxo.vercel.app/image/MOCKUP-OFERTA-BG-1.png" alt="Protocolo Xô Bigode Chinês" onerror="this.style.display='none'">
+  </div>
+</header>
+
+<!-- VERDADE -->
+<section class="truth">
+  <div class="wrap">
+    <div class="card">
+      <h2>Eu percebo porque ias sair.</h2>
+      <p>Talvez tenhas pensado <em>“mais uma promessa”</em>. Talvez já tenhas comprado cremes que ficaram meio cheios na casa de banho. Ou talvez só não fosse o momento certo.</p>
+      <p>Mas repara numa coisa: <strong>o bigode chinês não espera pelo momento certo</strong>. A cada mês, os músculos que sustentam as bochechas cedem um pouco mais e o sulco aprofunda.</p>
+      <p>Por isso baixei o preço uma última vez — para que o valor deixe de ser a razão para continuares a olhar para o espelho e não gostares do que vês.</p>
+
+      <div class="cost">
+        <div class="bad">
+          <small>Preenchimento na clínica</small>
+          <b>Centenas de €</b>
+          <span>por sessão, e tem de ser repetido</span>
+        </div>
+        <div class="good">
+          <small>Protocolo Xô Bigode</small>
+          <b id="costPrice">€14,90</b>
+          <span>uma única vez, acesso imediato</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE RECEBES -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>O que recebes hoje</h2>
+    <div class="card">
+      <ul class="list">
+        <li><strong>Protocolo em vídeo em 3 fases</strong> — Ativação Neuromuscular Seletiva: relaxar os músculos que puxam o rosto para baixo, ativar os que o levantam e drenar o inchaço.</li>
+        <li><strong>Só 3 minutos por dia</strong>, em casa, sem aparelhos, sem agulhas e sem o temido “rosto de balão”.</li>
+        <li><strong>Primeiras mudanças visíveis em 14 dias</strong> seguindo a rotina.</li>
+        <li><strong>Acesso imediato</strong> no telemóvel, logo após o pagamento.</li>
+        <li><strong>Garantia incondicional de 7 dias</strong> — o risco é todo meu.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos" style="padding-top:0">
+  <div class="wrap">
+    <h2>Escolhe a tua condição de última oportunidade</h2>
+    <p class="center" style="font-size:14px;color:var(--ink-soft);margin-bottom:22px">Preço exclusivo desta página. Não está disponível na página principal.</p>
+
+    <div class="expired-box">
+      <strong>⏱️ O desconto expirou.</strong><br>
+      <span style="font-size:14px">Ainda podes entrar no protocolo, mas agora pelo preço normal.</span>
+    </div>
+
+    <div class="plans">
+      <!-- PREMIUM -->
+      <div class="plan top">
+        <div class="ribbon">⭐ Mais escolhido</div>
+        <h3>Premium</h3>
+        <div class="sub">O cuidado 3D completo do rosto</div>
+        <ul class="inc">
+          <li>Protocolo em vídeo (3 fases)</li>
+          <li><strong>Bónus 1:</strong> Manual Skincare Anti-Craquelado</li>
+          <li><strong>Bónus 2:</strong> Guia do Colagénio na Menopausa e 35+</li>
+          <li><strong>Bónus 3:</strong> Drenagem Express “Efeito Freshness” (5 min)</li>
+          <li>Acesso imediato + garantia de 7 dias</li>
+        </ul>
+        <div class="price-old">de <span data-old="premium">€18,33</span></div>
+        <div class="price-new" data-new="premium">€14,90</div>
+        <div class="price-note">pagamento único</div>
+        <div class="save" data-save="premium">Poupas €3,43 hoje</div>
+        <a class="btn js-cta" data-plan="premium" href="https://pay.hotmart.com/U107766375N?off=lmr0xvsg&checkoutMode=10">
+          SIM, QUERO O PREMIUM
+          <small>Garantir o preço de última oportunidade</small>
+        </a>
+      </div>
+
+      <!-- ESSENCIAL -->
+      <div class="plan">
+        <h3>Essencial</h3>
+        <div class="sub">Só o protocolo principal</div>
+        <ul class="inc">
+          <li>Protocolo em vídeo (3 fases)</li>
+          <li>Acesso imediato + garantia de 7 dias</li>
+          <li class="no">Manual Skincare Anti-Craquelado</li>
+          <li class="no">Guia do Colagénio 35+</li>
+          <li class="no">Drenagem Express (5 min)</li>
+        </ul>
+        <div class="price-old">de <span data-old="essencial">€9,72</span></div>
+        <div class="price-new" data-new="essencial">€6,10</div>
+        <div class="price-note">pagamento único</div>
+        <div class="save" data-save="essencial">Poupas €3,62 hoje</div>
+        <a class="btn secondary js-cta" data-plan="essencial" href="https://pay.hotmart.com/U107766375N?off=upt907tf&checkoutMode=10">
+          QUERO O ESSENCIAL
+          <small>Começar só com o protocolo</small>
+        </a>
+      </div>
+    </div>
+
+    <div class="safe">
+      <span>🔒 Pagamento seguro Hotmart</span>
+      <span>📲 Acesso imediato</span>
+      <span>🛡️ 7 dias de garantia</span>
+    </div>
+  </div>
+</section>
+
+<!-- DOIS CAMINHOS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Daqui a 14 dias, há dois caminhos</h2>
+    <div class="paths">
+      <div class="path a">
+        <h4>Se fechares esta página…</h4>
+        <p>Continuas a evitar fotos de perfil, a disfarçar o sulco com base e a pensar se um dia vais ter coragem (e dinheiro) para injeções. E este preço não volta a aparecer.</p>
+      </div>
+      <div class="path b">
+        <h4>Se entrares agora…</h4>
+        <p>São 3 minutos por dia. Em duas semanas, olhas ao espelho e vês as bochechas mais firmes e o sulco mais suave — feito por ti, em casa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="card guarantee">
+      <img src="https://protocoloxo.vercel.app/image/selogarantia.png" alt="Garantia de 7 dias" onerror="this.style.display='none'">
+      <div>
+        <h3>Experimenta 7 dias sem risco</h3>
+        <p>Entra, faz a rotina e vê com os teus próprios olhos. Se por qualquer motivo não gostares, basta pedir dentro de 7 dias e recebes 100% do teu dinheiro de volta, sem perguntas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>Dúvidas rápidas</h2>
+    <details>
+      <summary>Porque é que este preço é mais baixo?</summary>
+      <p>É uma condição única para quem estava prestes a sair. Só existe nesta página e por tempo limitado — quando o contador chega a zero, volta o preço normal.</p>
+    </details>
+    <details>
+      <summary>Preciso de algum aparelho ou creme?</summary>
+      <p>Não. Só precisas das tuas mãos e de 3 minutos por dia.</p>
+    </details>
+    <details>
+      <summary>Como recebo o acesso?</summary>
+      <p>Logo após o pagamento recebes no teu e-mail o acesso à área de membros da Hotmart. Funciona no telemóvel, tablet ou computador.</p>
+    </details>
+    <details>
+      <summary>E se não funcionar para mim?</summary>
+      <p>Tens 7 dias de garantia. Pedes o reembolso diretamente na Hotmart e recebes o valor total de volta.</p>
+    </details>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final">
+  <div class="wrap">
+    <h2>Esta é a última vez que vês este preço.</h2>
+    <p>O contador continua a correr. Garante o teu acesso agora.</p>
+    <div style="max-width:420px;margin:22px auto 0">
+      <a class="btn js-cta" data-plan="premium" href="https://pay.hotmart.com/U107766375N?off=lmr0xvsg&checkoutMode=10">
+        SIM, QUERO O PREMIUM
+        <small>Protocolo + 3 bónus com desconto</small>
+      </a>
+    </div>
+    <a class="nothanks" id="nothanks" href="https://protocoloxo.vercel.app/">Não, obrigada. Prefiro continuar com o bigode chinês.</a>
+  </div>
+</section>
+
+<footer>
+  <p>© Protocolo Xô Bigode Chinês. Todos os direitos reservados.</p>
+  <p>Contacto: <a href="mailto:protocoloxobigode@gmail.com">protocoloxobigode@gmail.com</a></p>
+  <p style="margin-top:8px">Os resultados variam de pessoa para pessoa. Este produto não substitui aconselhamento médico ou dermatológico.</p>
+</footer>
+
+<!-- CTA fixo no telemóvel -->
+<div class="sticky-cta" id="stickyCta">
+  <a class="btn js-cta" data-plan="premium" href="https://pay.hotmart.com/U107766375N?off=lmr0xvsg&checkoutMode=10">
+    GARANTIR O DESCONTO — <span data-new="premium">€14,90</span>
+  </a>
+</div>
+
+<script>
+(function(){
+  var C = window.CONFIG;
+
+  /* ---------- 1. Preços a partir do CONFIG ---------- */
+  function euro(n){ return '€' + n.toFixed(2).replace('.', ','); }
+  function num(s){ return parseFloat(String(s).replace(/[^0-9,]/g,'').replace(',','.')) || 0; }
+
+  ['premium','essencial'].forEach(function(p){
+    var cfg = C[p];
+    document.querySelectorAll('[data-new="'+p+'"]').forEach(function(el){ el.textContent = cfg.precoNovo; });
+    document.querySelectorAll('[data-old="'+p+'"]').forEach(function(el){ el.textContent = cfg.precoAntigo; });
+    var poupa = num(cfg.precoAntigo) - num(cfg.precoNovo);
+    document.querySelectorAll('[data-save="'+p+'"]').forEach(function(el){
+      if (poupa > 0) {
+        var pct = Math.round(poupa / num(cfg.precoAntigo) * 100);
+        el.textContent = 'Poupas ' + euro(poupa) + ' hoje (-' + pct + '%)';
+      } else { el.style.display = 'none'; }
+    });
+  });
+  var costEl = document.getElementById('costPrice');
+  if (costEl) costEl.textContent = C.premium.precoNovo;
+
+  /* ---------- 2. UTMs: passa os parâmetros da URL para os checkouts ---------- */
+  var params = new URLSearchParams(window.location.search);
+  var reservados = ['off','checkoutMode'];
+  function comUtms(base){
+    try{
+      var url = new URL(base);
+      params.forEach(function(v,k){
+        if (reservados.indexOf(k) === -1 && !url.searchParams.has(k)) url.searchParams.set(k, v);
+      });
+      var src = params.get('utm_source');
+      url.searchParams.set('src', src ? C.SRC_TAG + '-' + src : C.SRC_TAG);
+      return url.toString();
+    }catch(e){ return base; }
+  }
+  function aplicarLinks(expirado){
+    document.querySelectorAll('.js-cta').forEach(function(a){
+      var plan = a.getAttribute('data-plan');
+      var base = expirado ? C.expirado[plan] : C[plan].link;
+      a.href = comUtms(base);
+    });
+  }
+  aplicarLinks(false);
+
+  // "Não, obrigada" volta à página principal mantendo as UTMs
+  var nt = document.getElementById('nothanks');
+  if (nt) {
+    try{
+      var u = new URL(C.paginaPrincipal);
+      params.forEach(function(v,k){ if(!u.searchParams.has(k)) u.searchParams.set(k,v); });
+      u.searchParams.set('br','1'); // evita novo back redirect
+      nt.href = u.toString();
+    }catch(e){}
+  }
+
+  /* ---------- 3. Contador (não reinicia ao recarregar) ---------- */
+  var KEY = 'xo_br_deadline';
+  var deadline;
+  try{
+    deadline = parseInt(localStorage.getItem(KEY), 10);
+    if (!deadline) { deadline = Date.now() + C.MINUTOS*60*1000; localStorage.setItem(KEY, deadline); }
+    localStorage.setItem('xo_br_visto', '1');
+  }catch(e){ deadline = Date.now() + C.MINUTOS*60*1000; }
+
+  var timerEl = document.getElementById('timer');
+  var urgency = document.getElementById('urgency');
+  var urgencyText = document.getElementById('urgencyText');
+  var expirou = false;
+
+  function tick(){
+    var rest = deadline - Date.now();
+    if (rest <= 0) {
+      if (!expirou) {
+        expirou = true;
+        timerEl.textContent = '00:00';
+        urgency.classList.add('expired');
+        urgencyText.textContent = '⏱️ O desconto expirou';
+        document.body.classList.add('is-expired');
+        ['premium','essencial'].forEach(function(p){
+          document.querySelectorAll('[data-new="'+p+'"]').forEach(function(el){ el.textContent = C[p].precoAntigo; });
+        });
+        if (costEl) costEl.textContent = C.premium.precoAntigo;
+        aplicarLinks(true);
+        if (window.fbq) fbq('trackCustom', 'BackRedirectExpirou');
+        window.dataLayer.push({ event: 'back_redirect_expirou' });
+      }
+      return;
+    }
+    var m = Math.floor(rest/60000), s = Math.floor((rest%60000)/1000);
+    timerEl.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    requestAnimationFrame(function(){ setTimeout(tick, 250); });
+  }
+  tick();
+
+  /* ---------- 4. Eventos de clique (Pixel, GA4, GTM) ---------- */
+  document.querySelectorAll('.js-cta').forEach(function(a){
+    a.addEventListener('click', function(){
+      var plan = a.getAttribute('data-plan');
+      var valor = expirou ? num(C[plan].precoAntigo) : C[plan].valor;
+      var dados = { content_name: 'Back Redirect - ' + plan, value: valor, currency: 'EUR', plano: plan, expirado: expirou };
+      // Evento personalizado: o InitiateCheckout oficial já é disparado pelo checkout da Hotmart
+      if (window.fbq) fbq('trackCustom', 'CliqueCheckoutBackRedirect', dados);
+      if (window.gtag) gtag('event', 'clique_checkout', { plano: plan, value: valor, currency: 'EUR', pagina: 'back_redirect' });
+      window.dataLayer.push({ event: 'clique_checkout_back_redirect', plano: plan, valor: valor });
+    });
+  });
+
+  /* ---------- 5. Botão fixo no telemóvel ---------- */
+  var sticky = document.getElementById('stickyCta');
+  var planos = document.getElementById('planos');
+  function onScroll(){
+    var y = window.scrollY;
+    var r = planos.getBoundingClientRect();
+    var naZonaPlanos = r.top < window.innerHeight && r.bottom > 0;
+    sticky.classList.toggle('show', y > 500 && !naZonaPlanos && window.innerWidth < 720);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
