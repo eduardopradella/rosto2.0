@@ -1688,5 +1688,44 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	});
 })();
 </script>
+	<!--
+  BACK REDIRECT — colar na página principal (protocoloxo.vercel.app), logo antes do </body>.
+
+  O que faz:
+  - Quando a visitante carrega em "voltar" no telemóvel/navegador, em vez de sair
+    vai para a página de oferta final, levando as UTMs junto.
+  - Só acontece UMA vez por visitante (depois de ver a oferta, não volta a aparecer).
+  - Não ativa se ela vier do link "Não, obrigada" (parâmetro br=1).
+  - O Chrome só respeita a entrada no histórico depois de a pessoa interagir com a página
+    (toque, scroll, clique), por isso o script arma-se na primeira interação.
+-->
+<script>
+(function(){
+  var PAGINA_BR = '/oferta-final.html'; // caminho da página de back redirect
+
+  try {
+    if (localStorage.getItem('xo_br_visto')) return;            // já viu a oferta
+  } catch(e){}
+  if (new URLSearchParams(location.search).get('br') === '1') return; // veio do "não, obrigada"
+
+  var armado = false;
+  function armar(){
+    if (armado) return;
+    armado = true;
+    history.pushState({ br: 1 }, '', location.href);
+    window.addEventListener('popstate', function(){
+      if (window.fbq) fbq('trackCustom', 'BackRedirectAtivado');
+      (window.dataLayer = window.dataLayer || []).push({ event: 'back_redirect_ativado' });
+      location.replace(PAGINA_BR + location.search);
+    });
+    ['touchstart','scroll','click','keydown'].forEach(function(ev){
+      window.removeEventListener(ev, armar, true);
+    });
+  }
+  ['touchstart','scroll','click','keydown'].forEach(function(ev){
+    window.addEventListener(ev, armar, { capture: true, passive: true, once: true });
+  });
+})();
+</script>
 </body>
 </html>
