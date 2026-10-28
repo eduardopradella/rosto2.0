@@ -1548,5 +1548,131 @@ var HF_INICIO = 0;         // qual item começa no centro (0 = o primeiro da lis
 	if (n < 2) raiz.querySelectorAll('.hf-seta').forEach(function(b){ b.hidden = true; });
 })();
 </script>
+
+<!-- ===== Pop-up de captura de e-mail ===== -->
+<style>
+	.lp-fundo{position:fixed;inset:0;z-index:9999;background:rgba(43,20,58,.62);display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+	.lp-fundo.lp-aberto{opacity:1;visibility:visible}
+	.lp-caixa{position:relative;width:100%;max-width:420px;background:var(--branco);border-radius:var(--raio);box-shadow:0 20px 60px rgba(43,20,58,.35);padding:34px 26px 24px;text-align:center;transform:translateY(16px) scale(.97);transition:transform .25s}
+	.lp-aberto .lp-caixa{transform:none}
+	.lp-fechar{position:absolute;top:8px;right:10px;width:36px;height:36px;border:0;background:none;font-size:26px;line-height:1;color:#999;cursor:pointer}
+	.lp-fechar:hover{color:var(--roxo)}
+	.lp-selo{display:inline-block;background:var(--rosa-claro);color:var(--roxo);font-size:13px;font-weight:600;padding:5px 12px;border-radius:30px;margin-bottom:12px}
+	.lp-caixa h3{margin:0 0 8px;font-size:23px;line-height:1.25;color:var(--roxo-escuro)}
+	.lp-caixa p{margin:0 0 18px;font-size:15px;color:var(--texto-suave);line-height:1.5}
+	.lp-form input{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:14px 16px;margin-bottom:10px;border:2px solid var(--borda);border-radius:10px;outline:none;transition:border-color .2s}
+	.lp-form input:focus{border-color:var(--roxo)}
+	.lp-form .lp-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+	.lp-form .btn{width:100%;border:0;cursor:pointer;font-family:inherit;font-size:17px;padding:17px 20px}
+	.lp-form .btn:disabled{opacity:.7;cursor:wait;transform:none}
+	.lp-erro{color:#c0392b;font-size:14px;min-height:20px;margin-top:8px}
+	.lp-aviso{font-size:12px!important;color:#999!important;margin:12px 0 0!important}
+	.lp-ok h3{margin-top:4px}
+	.lp-ok .btn{width:100%;box-sizing:border-box}
+</style>
+<div class="lp-fundo" id="lpPopup" role="dialog" aria-modal="true" aria-labelledby="lpTitulo" aria-hidden="true">
+	<div class="lp-caixa">
+		<button type="button" class="lp-fechar" aria-label="Fechar">&times;</button>
+		<div class="lp-passo-form">
+			<span class="lp-selo">Conteúdo gratuito</span>
+			<h3 id="lpTitulo">Receba dicas para suavizar o bigode chinês</h3>
+			<p>Deixe seu e-mail e receba conteúdos exclusivos do Protocolo Xô Bigode Chinês e avisos de condições especiais.</p>
+			<form class="lp-form" novalidate>
+				<input type="text" name="nome" placeholder="Seu primeiro nome" autocomplete="given-name" maxlength="100">
+				<input type="email" name="email" placeholder="Seu melhor e-mail" autocomplete="email" required maxlength="200">
+				<input type="text" name="site" class="lp-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+				<button type="submit" class="btn">Quero receber</button>
+				<div class="lp-erro" aria-live="polite"></div>
+			</form>
+			<p class="lp-aviso">Sem spam. Você pode cancelar quando quiser.</p>
+		</div>
+		<div class="lp-passo-ok lp-ok" hidden>
+			<span class="lp-selo">Tudo certo! 💜</span>
+			<h3>E-mail cadastrado com sucesso</h3>
+			<p>Fique de olho na sua caixa de entrada (e no spam/promoções).</p>
+			<button type="button" class="btn lp-continuar">Continuar lendo</button>
+		</div>
+	</div>
+</div>
+<script>
+(function(){
+	var CHAVE = 'lp_popup_estado';     // 'inscrito' ou timestamp do fechamento
+	var DIAS_APOS_FECHAR = 3;
+	var ATRASO_MS = 25000;             // mostra após 25s na página
+	var pop = document.getElementById('lpPopup');
+	if (!pop) return;
+
+	function ler(){ try { return localStorage.getItem(CHAVE); } catch(e){ return null; } }
+	function gravar(v){ try { localStorage.setItem(CHAVE, v); } catch(e){} }
+	function dl(o){ window.dataLayer = window.dataLayer || []; window.dataLayer.push(o); }
+
+	var estado = ler();
+	if (estado === 'inscrito') return;
+	if (estado && Date.now() - Number(estado) < DIAS_APOS_FECHAR * 864e5) return;
+
+	var mostrado = false, foiAoCheckout = false;
+	document.querySelectorAll('a.checkout').forEach(function(a){
+		a.addEventListener('click', function(){ foiAoCheckout = true; });
+	});
+
+	function abrir(motivo){
+		if (mostrado || foiAoCheckout) return;
+		mostrado = true;
+		pop.classList.add('lp-aberto');
+		pop.setAttribute('aria-hidden', 'false');
+		dl({event:'lead_popup_aberto', popup_motivo:motivo});
+		setTimeout(function(){ var i = pop.querySelector('input[name=email]'); if (i && window.innerWidth > 768) i.focus(); }, 300);
+	}
+	function fechar(){
+		pop.classList.remove('lp-aberto');
+		pop.setAttribute('aria-hidden', 'true');
+		if (ler() !== 'inscrito') gravar(String(Date.now()));
+	}
+
+	setTimeout(function(){ abrir('tempo'); }, ATRASO_MS);
+	document.addEventListener('mouseout', function(e){
+		if (!e.relatedTarget && e.clientY <= 0) abrir('saida');
+	});
+
+	pop.querySelector('.lp-fechar').addEventListener('click', fechar);
+	pop.querySelector('.lp-continuar').addEventListener('click', fechar);
+	pop.addEventListener('click', function(e){ if (e.target === pop) fechar(); });
+	document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && pop.classList.contains('lp-aberto')) fechar(); });
+
+	var form = pop.querySelector('.lp-form');
+	var erro = pop.querySelector('.lp-erro');
+	var botao = form.querySelector('button[type=submit]');
+	form.addEventListener('submit', function(e){
+		e.preventDefault();
+		var email = form.email.value.trim();
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { erro.textContent = 'Digite um e-mail válido.'; form.email.focus(); return; }
+		erro.textContent = '';
+		botao.disabled = true; botao.textContent = 'Enviando...';
+		fetch('/api/lead', {
+			method:'POST',
+			headers:{'Content-Type':'application/json'},
+			body: JSON.stringify({
+				email: email,
+				nome: form.nome.value.trim(),
+				site: form.site.value,
+				origem: location.href,
+				variante: window.PAGINA_VARIANTE || '',
+				utm: location.search.slice(1)
+			})
+		}).then(function(r){
+			if (!r.ok) throw new Error(r.status);
+			gravar('inscrito');
+			pop.querySelector('.lp-passo-form').hidden = true;
+			pop.querySelector('.lp-passo-ok').hidden = false;
+			dl({event:'lead_cadastrado'});
+			if (window.fbq) fbq('track', 'Lead');
+			if (window.gtag) gtag('event', 'generate_lead');
+		}).catch(function(){
+			erro.textContent = 'Não foi possível enviar agora. Tente novamente.';
+			botao.disabled = false; botao.textContent = 'Quero receber';
+		});
+	});
+})();
+</script>
 </body>
 </html>
