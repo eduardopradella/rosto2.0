@@ -2,13 +2,29 @@
 // Blocos: string = parágrafo (**negrito**), { cta }, { lista: [] }, { img: n } (image/email/prova-n.jpg).
 // atrasoHoras = horas após a inscrição.
 
+// ponte: true = o botão leva sempre à página /causa (os restantes seguem o grupo A/B do lead).
 export const EMAILS = [
 	{
 		atrasoHoras: 0,
+		ponte: true,
+		assunto: 'Descubra a causa real do seu bigode chinês',
+		preheader: 'Não é uma ruga. E não é a sua pele.',
+		blocos: [
+			'Pediu-me o teste do espelho, e ele está à sua espera. Mas antes de o fazer, precisa de saber uma coisa:',
+			'O bigode chinês que vê ao espelho **não é uma ruga.** E não é um problema da sua pele.',
+			'É por isso que os cremes não o resolveram. É por isso que o preenchimento volta sempre. E é por isso que os exercícios da internet podem até tê-lo agravado.',
+			'Existe uma causa real. Quando a perceber — demora 3 minutos — vai entender porque é que tudo o que tentou até hoje atacou o sítio errado.',
+			'Juntei tudo numa página curta, com o teste incluído:',
+			{ cta: 'Descobrir a causa real' },
+			'Até já,'
+		]
+	},
+	{
+		atrasoHoras: 4,
 		assunto: 'Faça este teste ao espelho (5 segundos)',
 		preheader: 'Vai perceber porque é que nada resultou até hoje.',
 		blocos: [
-			'Antes de mais nada, quero que faça uma coisa. Não demora mais do que 5 segundos.',
+			'Se ainda não fez o teste do espelho, faça-o agora. Não demora mais do que 5 segundos.',
 			'Abra a câmara frontal do telemóvel (ou vá ao espelho) e faça isto:',
 			{ lista: [
 				'Relaxe o rosto. Sem sorrir.',
@@ -145,13 +161,14 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const negrito = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const semMarcas = (s) => s.replace(/\*\*(.+?)\*\*/g, '$1');
 
-// Monta o e-mail n (0-4) para um lead. Devolve { assunto, html, texto }.
-export function montarEmail(n, { nome, link, linkDescadastro }) {
+// Monta o e-mail n (0-5) para um lead. variante ("ponte" ou "pagina") vai no utm_term.
+// Devolve { assunto, html, texto }.
+export function montarEmail(n, { nome, link, linkDescadastro, variante = '' }) {
 	const e = EMAILS[n];
 	const saudacao = nome ? `Olá, ${nome.split(' ')[0]},` : 'Olá,';
 	const assinatura = process.env.EMAIL_ASSINATURA || 'Equipa Protocolo Xô Bigode Chinês';
 	const [base, ancora] = link.split('#');
-	const urlCta = `${base}${base.includes('?') ? '&' : '?'}utm_source=email&utm_medium=sequencia&utm_campaign=xo_leads&utm_content=e${n + 1}${ancora ? '#' + ancora : ''}`;
+	const urlCta = `${base}${base.includes('?') ? '&' : '?'}utm_source=email&utm_medium=sequencia&utm_campaign=xo_leads&utm_content=e${n + 1}${variante ? '&utm_term=' + variante : ''}${ancora ? '#' + ancora : ''}`;
 
 	const p = 'margin:0 0 16px;font-size:16px;line-height:1.6;color:#2B2B2B';
 	let corpo = `<p style="${p}">${esc(saudacao)}</p>`;
@@ -168,7 +185,7 @@ export function montarEmail(n, { nome, link, linkDescadastro }) {
 			if (!assinado && b.startsWith('**P.S.**')) assinar();
 			corpo += `<p style="${p}">${negrito(b)}</p>`;
 			texto += `${semMarcas(b)}\n\n`;
-			if (!assinado && /^(Até amanhã|Um abraço),$/.test(b)) assinar();
+			if (!assinado && /^(Até amanhã|Até já|Um abraço),$/.test(b)) assinar();
 		} else if (b.lista) {
 			corpo += `<ul style="margin:0 0 16px;padding-left:22px;font-size:16px;line-height:1.6;color:#2B2B2B">${b.lista.map((i) => `<li style="margin-bottom:8px">${negrito(i)}</li>`).join('')}</ul>`;
 			texto += b.lista.map((i) => `- ${semMarcas(i)}`).join('\n') + '\n\n';

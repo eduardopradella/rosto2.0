@@ -10,6 +10,13 @@ import { EMAILS, montarEmail } from './emails.js';
 //   FUNIL_URL       destino dos botões; por omissão a secção de oferta da página
 const SITE = 'https://protocoloxo.vercel.app';
 const FUNIL_URL = process.env.FUNIL_URL || `${SITE}/#oferta`;
+const PONTE_URL = `${SITE}/causa`;
+
+// Teste A/B: metade dos leads tem os botões a levar à página /causa ("ponte"),
+// a outra metade à página de vendas ("pagina"). O 1.º e-mail vai sempre à /causa.
+// A variante segue no utm_term e no src/sck do checkout da Hotmart.
+export const varianteDoLead = (email) => (parseInt(hashEmail(email)[0], 16) % 2 ? 'ponte' : 'pagina');
+export const linkDoEmail = (n, variante) => (EMAILS[n].ponte || variante === 'ponte' ? PONTE_URL : FUNIL_URL);
 const REPLY_TO = process.env.EMAIL_REPLY_TO || 'protocoloxobigode@gmail.com';
 
 export const funilAtivo = () => Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_FROM);
@@ -58,7 +65,8 @@ async function enviar(resend, payload, idempotencyKey) {
 export async function inscreverNoFunil({ email, nome = '' }, { origem = 'popup' } = {}) {
 	if (!funilAtivo()) return { estado: 'funil_inativo' };
 
-	const estado = { email, nome, origem, inscritoEm: new Date().toISOString(), emails: [], descadastrado: false };
+	const variante = varianteDoLead(email);
+	const estado = { email, nome, origem, variante, inscritoEm: new Date().toISOString(), emails: [], descadastrado: false };
 	try {
 		await gravarEstado(email, estado, { novo: true });
 	} catch {
@@ -71,7 +79,7 @@ export async function inscreverNoFunil({ email, nome = '' }, { origem = 'popup' 
 	const chave = hashEmail(email);
 
 	for (let n = 0; n < EMAILS.length; n++) {
-		const { assunto, html, texto } = montarEmail(n, { nome, link: FUNIL_URL, linkDescadastro: descadastro });
+		const { assunto, html, texto } = montarEmail(n, { nome, link: linkDoEmail(n, variante), linkDescadastro: descadastro, variante });
 		const payload = {
 			from: process.env.EMAIL_FROM,
 			to: [email],
@@ -83,7 +91,7 @@ export async function inscreverNoFunil({ email, nome = '' }, { origem = 'popup' 
 				'List-Unsubscribe': `<${descadastro}>`,
 				'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
 			},
-			tags: [{ name: 'sequencia', value: 'xo_leads' }, { name: 'email', value: `e${n + 1}` }]
+			tags: [{ name: 'sequencia', value: 'xo_leads' }, { name: 'email', value: `e${n + 1}` }, { name: 'variante', value: variante }]
 		};
 		if (EMAILS[n].atrasoHoras > 0) payload.scheduledAt = new Date(inicio + EMAILS[n].atrasoHoras * 3600e3).toISOString();
 
