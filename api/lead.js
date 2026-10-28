@@ -1,5 +1,9 @@
 import { put } from '@vercel/blob';
+import { waitUntil } from '@vercel/functions';
 import { randomUUID } from 'node:crypto';
+import { inscreverNoFunil } from './_lib/funil.js';
+
+export const config = { maxDuration: 30 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -40,6 +44,9 @@ export default async function handler(req, res) {
 		console.error('erro ao salvar lead', e);
 		return res.status(500).json({ ok: false });
 	}
+
+	// envia o e-mail 1 e agenda os restantes sem atrasar a resposta ao pop-up
+	waitUntil(inscreverNoFunil(lead).catch((e) => console.error('erro no funil', e)));
 
 	return res.status(200).json({ ok: true });
 }
